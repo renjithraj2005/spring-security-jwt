@@ -1,11 +1,17 @@
 package com.demo.jwt.model;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -20,8 +26,15 @@ public class User {
     @Size(min = 8, message = "Minimum password length: 8 characters")
     private String password;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    List<Role> roles;
+    @Column(name = "is_superuser",nullable = false)
+    private boolean isSuperuser;
+
+    public User(@Size(min = 4, max = 255, message = "Minimum username length: 4 characters") String username, String email, @Size(min = 8, message = "Minimum password length: 8 characters") String password, boolean isSuperuser) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.isSuperuser = isSuperuser;
+    }
 
     public Integer getId() {
         return id;
@@ -33,6 +46,26 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
     }
 
     public void setUsername(String username) {
@@ -47,19 +80,24 @@ public class User {
         this.email = email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+        if (isSuperuser) {
+            list.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+
+        } else {
+            list.add(new SimpleGrantedAuthority("ROLE_USER"));
+        }
+        return list;
+    }
+
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
     }
 }
