@@ -1,6 +1,7 @@
 package com.demo.jwt.filter;
 
 import com.demo.jwt.exception.CustomException;
+import com.demo.jwt.model.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -36,10 +37,10 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(String username, List<Role> roles) {
+    public String createToken(String username, Role role) {
 
         Claims claims = Jwts.claims().setSubject(username);
-        claims.put("auth", roles.stream().map(s -> new SimpleGrantedAuthority(s.getAuthority())).filter(Objects::nonNull).collect(Collectors.toList()));
+        claims.put("auth", role);
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);

@@ -2,7 +2,7 @@ package com.demo.jwt.service;
 
 import com.demo.jwt.model.User;
 
-public interface ApiService {
+public interface ApiUserService {
 
     public String logIn(String username, String password);
 

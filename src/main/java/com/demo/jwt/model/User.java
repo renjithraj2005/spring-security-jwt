@@ -93,6 +93,9 @@ public class User implements UserDetails, CredentialsContainer {
         return list;
     }
 
+    public Role getRole(){
+        return isSuperuser ? Role.ROLE_ADMIN : Role.ROLE_CLIENT;
+    }
 
     public String getPassword() {
         return password;
