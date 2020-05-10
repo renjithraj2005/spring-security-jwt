@@ -43,7 +43,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()//
                 .title("JWT Auth API")//
                 .description(
-                        "JWT authentication service. Use you can use the `admin` or `client` users (password: admin and client respectively) to test the authorization filters. Once you have successfully logged in and obtained the token, you should click on the right top button `Authorize` and introduce it with the prefix \"Bearer \".")//
+                        "JWT authentication service. Use you can use the `admin` or `client` users (password: password) to test the authorization filters. Once you have successfully logged in and obtained the token, you should click on the right top button `Authorize` and introduce it with the prefix \"Bearer \".")//
                 .version("1.0.0")//
                 .license("MIT License").licenseUrl("http://opensource.org/licenses/MIT")//
                 .contact(new Contact(null, null, "renjithraj2005@gmail.com"))//

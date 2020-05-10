@@ -30,6 +30,9 @@ public class User implements UserDetails, CredentialsContainer {
     @Column(name = "is_superuser",nullable = false)
     private boolean isSuperuser;
 
+    public User() {
+    }
+
     public User(@Size(min = 4, max = 255, message = "Minimum username length: 4 characters") String username, String email, @Size(min = 8, message = "Minimum password length: 8 characters") String password, boolean isSuperuser) {
         this.username = username;
         this.email = email;
@@ -51,22 +54,22 @@ public class User implements UserDetails, CredentialsContainer {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     public void setUsername(String username) {
