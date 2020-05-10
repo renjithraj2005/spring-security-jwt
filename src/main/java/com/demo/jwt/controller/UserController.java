@@ -52,4 +52,15 @@ public class UserController {
     public String refresh(HttpServletRequest req) {
         return apiUserService.refresh(req.getRemoteUser());
     }
+
+    @GetMapping(value = "/profile")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
+    @ApiOperation(value = "User Profile", response = User.class)
+    @ApiResponses(value = {//
+            @ApiResponse(code = 400, message = "Something went wrong"), //
+            @ApiResponse(code = 403, message = "Access denied"), //
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    public User getProfile(HttpServletRequest req) {
+        return apiUserService.getUser(req);
+    }
 }

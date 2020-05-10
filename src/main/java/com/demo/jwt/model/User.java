@@ -1,5 +1,6 @@
 package com.demo.jwt.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,6 +26,7 @@ public class User implements UserDetails, CredentialsContainer {
     private String email;
 
     @Size(min = 8, message = "Minimum password length: 8 characters")
+    @JsonIgnore
     private String password;
 
     @Column(name = "is_superuser",nullable = false)

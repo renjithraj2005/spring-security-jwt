@@ -13,6 +13,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Service
 public class ApiUserServiceImpl implements ApiUserService {
 
@@ -57,5 +59,10 @@ public class ApiUserServiceImpl implements ApiUserService {
     @Override
     public String refresh(String username) {
         return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRole());
+    }
+
+    @Override
+    public User getUser(HttpServletRequest req) {
+        return userRepository.findByUsername(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)));
     }
 }
