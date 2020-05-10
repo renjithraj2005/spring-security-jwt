@@ -1,6 +1,8 @@
 package com.demo.jwt;
 
 import com.demo.jwt.model.User;
+import com.demo.jwt.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +14,9 @@ import java.util.Arrays;
 
 @SpringBootApplication
 public class JwtApplication extends SpringBootServletInitializer implements CommandLineRunner {
+
+	@Autowired
+	UserRepository userRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(JwtApplication.class, args);
@@ -25,12 +30,7 @@ public class JwtApplication extends SpringBootServletInitializer implements Comm
 	@Override
 	public void run(String... args) throws Exception {
 		User admin = new User("admin","admin@example.com","password",true);
-
-		//userService.signup(admin);
-
 		User client = new User("client","client@example.com","password",false);
-
-
-		//userService.signup(client);
+		userRepository.saveAll(Arrays.asList(admin,client));
 	}
 }
