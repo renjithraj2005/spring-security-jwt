@@ -2,12 +2,14 @@ package com.demo.jwt;
 
 import com.demo.jwt.model.User;
 import com.demo.jwt.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
@@ -22,6 +24,10 @@ public class JwtApplication extends SpringBootServletInitializer implements Comm
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
 	public static void main(String[] args) {
 		SpringApplication.run(JwtApplication.class, args);
 	}
