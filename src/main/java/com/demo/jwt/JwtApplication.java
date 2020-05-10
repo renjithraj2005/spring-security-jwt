@@ -11,6 +11,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +39,7 @@ public class JwtApplication extends SpringBootServletInitializer implements Comm
 	}
 
 	@Override
+	@Transactional
 	public void run(String... args) throws Exception {
 		User admin = new User("admin","admin@example.com","password",true);
 		admin.setPassword(passwordEncoder.encode(admin.getPassword()));

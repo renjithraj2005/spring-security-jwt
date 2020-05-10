@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 public class User implements UserDetails, CredentialsContainer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
     @Size(min = 4, max = 255, message = "Minimum username length: 4 characters")
