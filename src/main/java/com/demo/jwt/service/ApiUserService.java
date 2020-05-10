@@ -9,4 +9,6 @@ public interface ApiUserService {
     public boolean signUp(User user);
 
     public void delete(User user);
+
+    public String refresh(String username);
 }

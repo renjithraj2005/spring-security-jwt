@@ -53,4 +53,9 @@ public class ApiUserServiceImpl implements ApiUserService {
     public void delete(User user) {
 
     }
+
+    @Override
+    public String refresh(String username) {
+        return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRole());
+    }
 }

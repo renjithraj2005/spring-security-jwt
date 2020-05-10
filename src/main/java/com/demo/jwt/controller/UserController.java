@@ -8,7 +8,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/users")
@@ -40,5 +43,11 @@ public class UserController {
     public ResponseEntity<String> signUp(@ApiParam("Signup User") @RequestBody UserRequest user) {
         apiUserService.signUp(modelMapper.map(user, User.class));
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/refresh")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_CLIENT')")
+    public String refresh(HttpServletRequest req) {
+        return apiUserService.refresh(req.getRemoteUser());
     }
 }
