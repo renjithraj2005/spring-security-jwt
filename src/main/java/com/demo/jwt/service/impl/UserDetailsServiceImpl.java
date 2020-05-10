@@ -1,4 +1,4 @@
-package com.demo.jwt.service;
+package com.demo.jwt.service.impl;
 
 import com.demo.jwt.model.User;
 import com.demo.jwt.repository.UserRepository;
@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-public class CustomUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     UserRepository userRepository;
