@@ -11,7 +11,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ApiUserServiceImpl implements ApiUserService {
 
     @Autowired
@@ -38,7 +40,13 @@ public class ApiUserServiceImpl implements ApiUserService {
 
     @Override
     public boolean signUp(User user) {
-        return false;
+        if (!userRepository.existsByUsername(user.getUsername())) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(user);
+            return true;
+        } else {
+            throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
     }
 
     @Override
