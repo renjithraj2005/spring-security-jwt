@@ -2,6 +2,7 @@ package com.demo.jwt.controller;
 
 import com.demo.jwt.model.User;
 import com.demo.jwt.request.UserRequest;
+import com.demo.jwt.response.LoginResponse;
 import com.demo.jwt.service.ApiUserService;
 import io.swagger.annotations.*;
 import org.modelmapper.ModelMapper;
@@ -29,8 +30,9 @@ public class UserController {
     @ApiResponses(value = {//
             @ApiResponse(code = 400, message = "Something went wrong"), //
             @ApiResponse(code = 422, message = "Invalid username/password supplied")})
-    public String login(@ApiParam("User") @RequestBody UserRequest loginRequest) {
-        return apiUserService.logIn(loginRequest.getUsername(), loginRequest.getPassword());
+    public ResponseEntity<LoginResponse> login(@ApiParam("User") @RequestBody UserRequest loginRequest) {
+        LoginResponse response =  new LoginResponse(apiUserService.logIn(loginRequest.getUsername(), loginRequest.getPassword()));
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
     @PostMapping("/register")
@@ -40,7 +42,7 @@ public class UserController {
             @ApiResponse(code = 403, message = "Access denied"), //
             @ApiResponse(code = 422, message = "Username is already in use"), //
             @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
-    public ResponseEntity<String> signUp(@ApiParam("Signup User") @RequestBody UserRequest user) {
+    public ResponseEntity<String> signUp(@ApiParam("Sign Up User") @RequestBody UserRequest user) {
         apiUserService.signUp(modelMapper.map(user, User.class));
         return new ResponseEntity<>(HttpStatus.OK);
     }
