@@ -45,6 +45,7 @@ public class JwtTokenProvider {
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
 
+        //TODO store token to redis
         return Jwts.builder()//
                 .setClaims(claims)//
                 .setIssuedAt(now)//
@@ -72,6 +73,7 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String token) {
         try {
+            //TODO check token from redis. This is an alternate approach to invalidate JWT before its expiry
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
